@@ -24,7 +24,6 @@ REGISTERED_NORM_DICT: dict[str, type] = {
     "bn2d": nn.BatchNorm2d,
     "ln": nn.LayerNorm,
     "ln2d": LayerNorm2d,
-    "trms2d": TritonRMSNorm2d,
 }
 
 
