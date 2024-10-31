@@ -4,10 +4,9 @@ import torch
 import torch.nn as nn
 from torch.nn.modules.batchnorm import _BatchNorm
 
-from efficientvit.models.nn.triton_rms_norm import TritonRMSNorm2dFunc
 from efficientvit.models.utils import build_kwargs_from_config
 
-__all__ = ["LayerNorm2d", "TritonRMSNorm2d", "build_norm", "reset_bn", "set_norm_eps"]
+__all__ = ["LayerNorm2d", "build_norm", "reset_bn", "set_norm_eps"]
 
 
 class LayerNorm2d(nn.LayerNorm):
@@ -18,10 +17,6 @@ class LayerNorm2d(nn.LayerNorm):
             out = out * self.weight.view(1, -1, 1, 1) + self.bias.view(1, -1, 1, 1)
         return out
 
-
-class TritonRMSNorm2d(nn.LayerNorm):
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return TritonRMSNorm2dFunc.apply(x, self.weight, self.bias, self.eps)
 
 
 # register normalization function here
