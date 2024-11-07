@@ -660,8 +660,10 @@ class LiteMLA(nn.Module):
 
         H, W = list(qkv.size())[-2:]
         if H * W > self.dim:
+            print("Using relu_linear_att")
             out = self.relu_linear_att(qkv).to(qkv.dtype)
         else:
+            print("Using relu_quadratic_att")
             out = self.relu_quadratic_att(qkv)
         out = self.proj(out)
 
